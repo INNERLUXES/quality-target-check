@@ -1,0 +1,52 @@
+{
+  "name": "quality-target-check",
+  "version": "1.0.0",
+  "description": "Application quality target check: reads a CSV or JSON file of quality targets organized by the ISO/IEC 25010 product quality model (characteristic, sub-characteristic, metric, unit, target with a comparison, owner and measurement method) and a file of measured results, and reports characteristics with no target, targets with no method or owner, unknown characteristics and units, targets with no measurement, measurements that miss their target with the gap, and measurements with no target, with a summary per characteristic. Text, JSON, CSV and GitHub annotation output, exit codes for a pipeline, no dependencies.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "quality-target-check": "bin/quality-target-check.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "docs",
+    "examples",
+    "research",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage \"test/*.test.js\"",
+    "check": "node tools/check.mjs",
+    "example": "node tools/example.mjs"
+  },
+  "keywords": [
+    "iso-25010",
+    "software-quality",
+    "quality-attributes",
+    "quality-model",
+    "non-functional-requirements",
+    "nfr",
+    "slo",
+    "performance-budget",
+    "quality-gate",
+    "application-development",
+    "csv",
+    "cli"
+  ],
+  "author": "INNERLUXES <info@innerluxes.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INNERLUXES/quality-target-check.git"
+  },
+  "homepage": "https://innerluxes.dev/application/development"
+}
