@@ -1,0 +1,17 @@
+characteristic,sub-characteristic,metric,unit,target,owner,how it is measured,notes
+performance efficiency,time behaviour,p95 checkout latency,ms,<= 300,perf-team,k6 load test against staging,
+performance efficiency,resource utilization,api memory,MiB,<= 512,perf-team,container memory at peak load,
+performance efficiency,capacity,peak bookings throughput,rps,>= 500,perf-team,k6 load test against staging,
+reliability,availability,monthly availability,%,>= 99.9,sre-team,uptime probe every minute,
+reliability,recoverability,mean time to restore,min,<= 30,sre-team,incident log,
+Reliabilty,fault tolerance,failed request rate,%,<= 1,sre-team,gateway logs,typo kept on purpose
+security,confidentiality,critical vulnerabilities,count,== 0,security-team,dependency scan on every build,
+security,,open admin endpoints,count,== 0,,,
+usability,learnability,task completion rate,%,>= 85,design-team,moderated test with twelve people,older name of the characteristic
+maintainability,testability,line coverage,%,>= 80,dev-team,coverage report of the test run,
+maintainability,modularity,cyclic module dependencies,count,== 0,dev-team,dependency graph of the build,
+compatibility,interoperabilty,contract test pass rate,%,>= 99,dev-team,contract tests against partner sandboxes,
+flexibility,installability,installation time,min,<= 15,ops-team,scripted install on a clean machine,
+reliability,availability,monthly availability,%,>= 99.5,sre-team,uptime probe every minute,the same metric and comparison again
+performance efficiency,time behaviour,search response time,milisecond,<= 200,perf-team,k6 load test against staging,
+performance efficiency,time behaviour,first contentful paint,s,fast,web-team,lab run of the home page,

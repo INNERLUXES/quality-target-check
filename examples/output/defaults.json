@@ -1,0 +1,37 @@
+{
+  "name": "built-in defaults",
+  "rules": {
+    "missingCharacteristic": "warning",
+    "unknownCharacteristic": "error",
+    "unknownSubCharacteristic": "warning",
+    "missingMethod": "warning",
+    "missingOwner": "warning",
+    "unknownUnit": "error",
+    "unitMismatch": "error",
+    "duplicateTarget": "warning",
+    "unverifiedTarget": "warning",
+    "targetMissed": "error",
+    "untargetedMeasurement": "info"
+  },
+  "required": [
+    "functional suitability",
+    "performance efficiency",
+    "compatibility",
+    "interaction capability",
+    "reliability",
+    "security",
+    "maintainability",
+    "flexibility",
+    "safety"
+  ],
+  "requireAll": false,
+  "characteristicAliases": {
+    "usability": "interaction capability",
+    "portability": "flexibility",
+    "functionality": "functional suitability",
+    "efficiency": "performance efficiency"
+  },
+  "unitAliases": {},
+  "minSeverity": "info",
+  "failOn": "error"
+}

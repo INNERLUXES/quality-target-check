@@ -1,0 +1,5 @@
+{
+  "name": "Quillmoor quality targets",
+  "required": ["functional suitability", "performance efficiency", "reliability", "security", "maintainability", "safety"],
+  "unitAliases": { "req/sec": "rps" }
+}

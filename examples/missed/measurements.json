@@ -1,0 +1,19 @@
+{
+  "app": "Quillmoor Bookings",
+  "measurements": [
+    { "metric": "p95 checkout latency", "value": 420, "unit": "ms", "source": "k6 run on staging" },
+    { "metric": "api memory", "value": 0.6, "unit": "GiB", "source": "container metrics" },
+    { "metric": "peak bookings throughput", "value": "610 req/sec", "source": "k6 run on staging" },
+    { "metric": "monthly availability", "value": "99.5%", "source": "uptime probe" },
+    { "metric": "mean time to restore", "value": 0.4, "unit": "h", "source": "incident log" },
+    { "metric": "failed request rate", "value": 0.4, "unit": "%", "source": "gateway logs" },
+    { "metric": "critical vulnerabilities", "value": 2, "source": "dependency scan" },
+    { "metric": "task completion rate", "value": 88, "unit": "%", "source": "moderated test" },
+    { "metric": "line coverage", "value": 84.2, "unit": "%", "source": "coverage report" },
+    { "metric": "cyclic module dependencies", "value": 0, "unit": "count", "source": "dependency graph" },
+    { "metric": "contract test pass rate", "value": 100, "unit": "%", "source": "contract tests" },
+    { "metric": "installation time", "value": 12, "unit": "MB", "source": "install script" },
+    { "metric": "search response time", "value": 180, "unit": "ms", "source": "k6 run on staging" },
+    { "metric": "error budget burn", "value": 0.7, "unit": "score", "source": "slo dashboard export" }
+  ]
+}

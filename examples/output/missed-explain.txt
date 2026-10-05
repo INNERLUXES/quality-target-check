@@ -1,0 +1,170 @@
+quality-target-check: targets examples/missed/targets.csv; measurements examples/missed/measurements.json
+input: targets examples/missed/targets.csv (1 file: 1 CSV file; 16 records); measurements examples/missed/measurements.json (1 file: 1 JSON file; 14 records)
+config: examples/config.json (Quillmoor quality targets): 6 required characteristics, require all off; 4 characteristic aliases, 1 unit alias; minimum severity info; fail on error
+rules: missing-characteristic (warning); unknown-characteristic (error); unknown-sub-characteristic (warning); missing-method (warning); missing-owner (warning); unknown-unit (error); unit-mismatch (error); duplicate-target (warning); unverified-target (warning); target-missed (error); untargeted-measurement (info); invalid-record (error); unreadable-file (error); unparsable-file (error)
+targets: 15 targets: 8 met, 4 missed, 3 unverified; 14 measurements, 1 with no target
+findings: 16 (8 error, 7 warning, 1 info)
+
+Characteristics (10)
+
+  characteristic          required  targets  met  missed  unverified
+  functional suitability  yes       0        0    0       0
+  performance efficiency  yes       4        1    2       1
+  compatibility           no        1        1    0       0
+  interaction capability  no        1        1    0       0
+  reliability             yes       3        2    1       0
+  security                yes       2        0    1       1
+  maintainability         yes       2        2    0       0
+  flexibility             no        1        0    0       1
+  safety                  yes       0        0    0       0
+  Reliabilty (unknown)    no        1        1    0       0
+
+Targets missed (4)
+
+  characteristic          metric                    target      measured                         gap        at
+  performance efficiency  p95 checkout latency      <= 300 ms   420 ms                           120 ms     examples/missed/targets.csv:2
+  performance efficiency  api memory                <= 512 MiB  614.4 MiB (0.6 GiB as measured)  102.4 MiB  examples/missed/targets.csv:3
+  reliability             monthly availability      >= 99.9%    99.5%                            0.4%       examples/missed/targets.csv:5
+  security                critical vulnerabilities  == 0 count  2 count                          2 count    examples/missed/targets.csv:8
+
+Findings (16)
+
+  ERROR    target-missed               examples/missed/targets.csv:2
+           the target "p95 checkout latency" of performance efficiency (<= 300 ms) is missed: measured 420 ms at examples/missed/measurements.json:4 (source: k6 run on staging), 120 ms over it
+           fix: improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed
+           rule: a measurement that does not meet the comparison of its target
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           basis: the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality (The ISO/IEC 25000 series of standards, page 2 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards?start=5)
+           basis: the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           the tool's own choice: every measurement of a metric is compared with every target of the metric, after conversion to the unit of the target and with twelve significant digits; a target is missed when one of its measurements misses it, and the gap is shown in the unit of the target
+
+  ERROR    target-missed               examples/missed/targets.csv:3
+           the target "api memory" of performance efficiency (<= 512 MiB) is missed: measured 614.4 MiB (0.6 GiB as measured) at examples/missed/measurements.json:5 (source: container metrics), 102.4 MiB over it
+           fix: improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed
+           rule: a measurement that does not meet the comparison of its target
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           basis: the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality (The ISO/IEC 25000 series of standards, page 2 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards?start=5)
+           basis: the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           the tool's own choice: every measurement of a metric is compared with every target of the metric, after conversion to the unit of the target and with twelve significant digits; a target is missed when one of its measurements misses it, and the gap is shown in the unit of the target
+
+  ERROR    target-missed               examples/missed/targets.csv:5
+           the target "monthly availability" of reliability (>= 99.9%) is missed: measured 99.5% at examples/missed/measurements.json:7 (source: uptime probe), 0.4% under it
+           fix: improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed
+           rule: a measurement that does not meet the comparison of its target
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           basis: the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality (The ISO/IEC 25000 series of standards, page 2 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards?start=5)
+           basis: the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           the tool's own choice: every measurement of a metric is compared with every target of the metric, after conversion to the unit of the target and with twelve significant digits; a target is missed when one of its measurements misses it, and the gap is shown in the unit of the target
+
+  ERROR    unknown-characteristic      examples/missed/targets.csv:7
+           the target "failed request rate" has the characteristic "Reliabilty", which is not one of the nine of ISO/IEC 25010 or a known alias, did you mean "reliability"?
+           fix: write one of the nine characteristics, such as performance efficiency or reliability, or add the name your team uses to characteristicAliases in the configuration
+           rule: a target whose characteristic is none of the nine of ISO/IEC 25010 and none of the 4 aliases of the configuration, or is empty
+           basis: the product quality model has nine characteristics: functional suitability, performance efficiency, compatibility, interaction capability, reliability, security, maintainability, flexibility and safety (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           basis: interaction capability was formerly called usability, and flexibility was formerly called portability (ISO/IEC 25010, Systems and Software Quality (arc42 Quality Model), https://quality.arc42.org/standards/iso-25010)
+           basis: ISO/IEC 9126, the model before ISO/IEC 25010, named functionality and efficiency where ISO/IEC 25010 names functional suitability and performance efficiency, and had maturity under reliability (ISO/IEC 9126 (Wikipedia), https://en.wikipedia.org/wiki/ISO/IEC_9126)
+           basis: the first edition, now withdrawn, had a product quality model of eight characteristics (ISO/IEC 25010, System and software quality models, first edition, withdrawn (ISO), https://www.iso.org/standard/35733.html)
+           the tool's own choice: a characteristic is compared with the letters A to Z lowered and every other character made a space, with the nine names and the aliases (the older names usability, portability, functionality and efficiency are built in); a near name is suggested, never used; the target is still compared with its measurements
+
+  ERROR    target-missed               examples/missed/targets.csv:8
+           the target "critical vulnerabilities" of security (== 0 count) is missed: measured 2 count at examples/missed/measurements.json:10 (source: dependency scan), 2 count off it
+           fix: improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed
+           rule: a measurement that does not meet the comparison of its target
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           basis: the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality (The ISO/IEC 25000 series of standards, page 2 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards?start=5)
+           basis: the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           the tool's own choice: every measurement of a metric is compared with every target of the metric, after conversion to the unit of the target and with twelve significant digits; a target is missed when one of its measurements misses it, and the gap is shown in the unit of the target
+
+  ERROR    unknown-unit                examples/missed/targets.csv:16
+           the target "search response time" of performance efficiency has the unit "milisecond", which is not one the tool knows, did you mean "millisecond"?; the target is not compared
+           fix: write the unit as one the tool knows, such as ms, s, %, MB, MiB, rps or count, or add the name your team uses to unitAliases in the configuration
+           rule: a target with no unit, or a target or measurement whose unit is none of the units of src/units.js and the 1 alias of the configuration, or that names two different units
+           basis: the ISO/IEC 2502n division of the series gives a reference model for measurement, defined quality measures and guidance on applying them, with ISO/IEC 25023 for measures of system and software product quality (The ISO/IEC 25000 series of standards, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards)
+           the tool's own choice: a target needs a unit from src/units.js or the unitAliases of the configuration (count and score stand for a number with no other unit); a measurement with no unit takes the unit of its target; a target or measurement with a unit the tool does not know is not compared, and its target counts as unverified
+
+  ERROR    invalid-record              examples/missed/targets.csv:17
+           the target "first contentful paint" of performance efficiency: the target "fast" has no comparison; write one of <=, >=, <, >, == in front of the number or in the comparison column; the target is not checked
+           fix: correct the record at the line named
+           rule: a target or measurement with no metric, the wrong number of fields, no target or value the tool can read, or a value of the wrong kind
+           basis: every line of a CSV file should hold the same number of fields (RFC 4180, Common Format and MIME Type for Comma-Separated Values (CSV) Files, https://www.rfc-editor.org/rfc/rfc4180)
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           the tool's own choice: a record with no metric, a CSV row with a different number of fields than the header, a JSON record that is not an object or names a field twice, a target with no comparison or no number, and a measurement with no number are not checked; a value of the wrong kind is taken as empty; this rule cannot be set lower or off
+
+  ERROR    unit-mismatch               examples/missed/measurements.json:15
+           the measurement of "installation time" is in MB (data size) and its target at examples/missed/targets.csv:14 is in min (time); it is not compared
+           fix: measure the metric in the unit of the target, or correct the unit of the target or of the measurement
+           rule: a measurement whose unit measures another dimension than the unit of its target
+           basis: the ISO/IEC 2502n division of the series gives a reference model for measurement, defined quality measures and guidance on applying them, with ISO/IEC 25023 for measures of system and software product quality (The ISO/IEC 25000 series of standards, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards)
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           the tool's own choice: two units can be compared when they measure the same dimension (time, percentage, data size, rate, count or score), and the measurement is then converted to the unit of the target; a percentage is never read as a count, and a time never as a rate
+
+  WARNING  missing-characteristic      examples/missed/targets.csv:1
+           no target names functional suitability, a characteristic of the required list
+           fix: add a target for the characteristic with a metric, a unit, a target value and an owner, or take the characteristic out of the required list of the configuration
+           rule: a characteristic of the required list (functional suitability, performance efficiency, reliability, security, maintainability and safety) that no target names
+           basis: the product quality model has nine characteristics: functional suitability, performance efficiency, compatibility, interaction capability, reliability, security, maintainability, flexibility and safety (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           basis: the current edition defines a product quality model of nine characteristics, divided into sub-characteristics, as a reference for specifying, measuring and evaluating the quality of a product (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           basis: the quality model decides which quality characteristics are taken into account when the properties of a software product are evaluated, and it sorts product quality into characteristics and sub-characteristics (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           the tool's own choice: which characteristics need a target is the tool's own choice, set by the required list of the configuration (all nine by default); a target row with the characteristic counts, whether or not its target can be read; a warning, or an error with --require-all or requireAll, which then win over the level of the rule
+
+  WARNING  missing-characteristic      examples/missed/targets.csv:1
+           no target names safety, a characteristic of the required list
+           fix: add a target for the characteristic with a metric, a unit, a target value and an owner, or take the characteristic out of the required list of the configuration
+           rule: a characteristic of the required list (functional suitability, performance efficiency, reliability, security, maintainability and safety) that no target names
+           basis: the product quality model has nine characteristics: functional suitability, performance efficiency, compatibility, interaction capability, reliability, security, maintainability, flexibility and safety (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           basis: the current edition defines a product quality model of nine characteristics, divided into sub-characteristics, as a reference for specifying, measuring and evaluating the quality of a product (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           basis: the quality model decides which quality characteristics are taken into account when the properties of a software product are evaluated, and it sorts product quality into characteristics and sub-characteristics (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           the tool's own choice: which characteristics need a target is the tool's own choice, set by the required list of the configuration (all nine by default); a target row with the characteristic counts, whether or not its target can be read; a warning, or an error with --require-all or requireAll, which then win over the level of the rule
+
+  WARNING  unverified-target           examples/missed/targets.csv:9
+           the target "open admin endpoints" of security (== 0 count) has no measurement
+           fix: add a measurement of the metric, from the method the target names, to the measurements file
+           rule: a target whose metric has no measurement in the measurements files
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           basis: the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality (The ISO/IEC 25000 series of standards, page 2 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards?start=5)
+           the tool's own choice: a measurement belongs to a target when their metrics are the same in their term form; a warning, because a target with no result says nothing about the application yet
+
+  WARNING  missing-owner               examples/missed/targets.csv:9
+           the target "open admin endpoints" of security has no owner
+           fix: name the person or team who answers for the target and acts when it is missed
+           rule: a target with an empty owner, or a targets file with no owner column
+           basis: the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           the tool's own choice: an owner per target is the tool's own choice: a target that nobody answers for is not kept up to date when the application changes; any text counts as an owner
+
+  WARNING  missing-method              examples/missed/targets.csv:9
+           the target "open admin endpoints" of security names no measurement method
+           fix: write how the metric is measured: the tool, the test or the query, and where it runs
+           rule: a target with an empty measurement method, or a targets file with no method column
+           basis: the ISO/IEC 2502n division of the series gives a reference model for measurement, defined quality measures and guidance on applying them, with ISO/IEC 25023 for measures of system and software product quality (The ISO/IEC 25000 series of standards, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards)
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           the tool's own choice: a method that is empty or a blank word such as none, n/a or tbd; any other text counts as a method, the tool cannot tell whether it measures the metric
+
+  WARNING  unknown-sub-characteristic  examples/missed/targets.csv:13
+           the target "contract test pass rate" of compatibility has the sub-characteristic "interoperabilty", which is not one of ISO/IEC 25010, did you mean "interoperability"?
+           fix: write a sub-characteristic of the characteristic, such as time behaviour for performance efficiency or availability for reliability, or leave the column empty
+           rule: a target with a sub-characteristic that is not one of src/model.js, or that belongs to another characteristic
+           basis: each characteristic is made of sub-characteristics, such as time behaviour, resource utilization and capacity for performance efficiency, or learnability, operability and inclusivity for interaction capability (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           basis: reliability, security, maintainability, flexibility and safety have sub-characteristics of their own, such as faultlessness and availability, confidentiality and resistance, testability, scalability, and fail safe (ISO/IEC 25010, the product quality model, page 2 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010?start=5)
+           basis: ISO/IEC 9126, the model before ISO/IEC 25010, named functionality and efficiency where ISO/IEC 25010 names functional suitability and performance efficiency, and had maturity under reliability (ISO/IEC 9126 (Wikipedia), https://en.wikipedia.org/wiki/ISO/IEC_9126)
+           the tool's own choice: a sub-characteristic is optional; when one is written it must be a sub-characteristic of the characteristic of the target, by its name or by an older name or spelling of src/model.js; a warning, because the target can still be checked
+
+  WARNING  duplicate-target            examples/missed/targets.csv:15
+           the target "monthly availability" of reliability has the comparison >= a second time; the first target is at examples/missed/targets.csv:5
+           fix: keep one target per metric and comparison, or name the metrics apart
+           rule: a target whose metric and comparison an earlier target already has
+           basis: the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics (ISO/IEC 25010, Product quality model, second edition (ISO), https://www.iso.org/standard/78176.html)
+           the tool's own choice: two targets with the same metric, compared in their term form, and the same comparison; both are still checked, so the stricter one decides; a lower and an upper limit of one metric are not duplicates
+
+  INFO     untargeted-measurement      examples/missed/measurements.json:17
+           the measurement of "error budget burn", 0.7 score from slo dashboard export, names a metric that no target has
+           fix: add a target for the metric, or write the metric as its target writes it
+           rule: a measurement whose metric no target names
+           basis: the quality model decides which quality characteristics are taken into account when the properties of a software product are evaluated, and it sorts product quality into characteristics and sub-characteristics (ISO/IEC 25010, the product quality model, page 1 (iso25000.com), https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)
+           the tool's own choice: info by default: a measured value with no target may be a target that was forgotten or a metric written two ways, such as p95 latency and latency p95
+
+note: examples/missed/targets.csv: 1 column the tool does not read was left out: "notes"
+note: examples/missed/measurements.json: 1 key the tool does not read was left out: "app"
+
+This check compares the targets with the measurements as they are written. It runs no measurement, does not judge whether a target or a method suits the application, and does not certify conformance to ISO/IEC 25010 or any other standard (docs/limits.md).
+
+RESULT: FAIL - 8 findings at or above error (8 error, 7 warning, 1 info)

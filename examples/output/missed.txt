@@ -1,0 +1,101 @@
+quality-target-check: targets examples/missed/targets.csv; measurements examples/missed/measurements.json
+input: targets examples/missed/targets.csv (1 file: 1 CSV file; 16 records); measurements examples/missed/measurements.json (1 file: 1 JSON file; 14 records)
+config: examples/config.json (Quillmoor quality targets): 6 required characteristics, require all off; 4 characteristic aliases, 1 unit alias; minimum severity info; fail on error
+rules: missing-characteristic (warning); unknown-characteristic (error); unknown-sub-characteristic (warning); missing-method (warning); missing-owner (warning); unknown-unit (error); unit-mismatch (error); duplicate-target (warning); unverified-target (warning); target-missed (error); untargeted-measurement (info); invalid-record (error); unreadable-file (error); unparsable-file (error)
+targets: 15 targets: 8 met, 4 missed, 3 unverified; 14 measurements, 1 with no target
+findings: 16 (8 error, 7 warning, 1 info)
+
+Characteristics (10)
+
+  characteristic          required  targets  met  missed  unverified
+  functional suitability  yes       0        0    0       0
+  performance efficiency  yes       4        1    2       1
+  compatibility           no        1        1    0       0
+  interaction capability  no        1        1    0       0
+  reliability             yes       3        2    1       0
+  security                yes       2        0    1       1
+  maintainability         yes       2        2    0       0
+  flexibility             no        1        0    0       1
+  safety                  yes       0        0    0       0
+  Reliabilty (unknown)    no        1        1    0       0
+
+Targets missed (4)
+
+  characteristic          metric                    target      measured                         gap        at
+  performance efficiency  p95 checkout latency      <= 300 ms   420 ms                           120 ms     examples/missed/targets.csv:2
+  performance efficiency  api memory                <= 512 MiB  614.4 MiB (0.6 GiB as measured)  102.4 MiB  examples/missed/targets.csv:3
+  reliability             monthly availability      >= 99.9%    99.5%                            0.4%       examples/missed/targets.csv:5
+  security                critical vulnerabilities  == 0 count  2 count                          2 count    examples/missed/targets.csv:8
+
+Findings (16)
+
+  ERROR    target-missed               examples/missed/targets.csv:2
+           the target "p95 checkout latency" of performance efficiency (<= 300 ms) is missed: measured 420 ms at examples/missed/measurements.json:4 (source: k6 run on staging), 120 ms over it
+           fix: improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed
+
+  ERROR    target-missed               examples/missed/targets.csv:3
+           the target "api memory" of performance efficiency (<= 512 MiB) is missed: measured 614.4 MiB (0.6 GiB as measured) at examples/missed/measurements.json:5 (source: container metrics), 102.4 MiB over it
+           fix: improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed
+
+  ERROR    target-missed               examples/missed/targets.csv:5
+           the target "monthly availability" of reliability (>= 99.9%) is missed: measured 99.5% at examples/missed/measurements.json:7 (source: uptime probe), 0.4% under it
+           fix: improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed
+
+  ERROR    unknown-characteristic      examples/missed/targets.csv:7
+           the target "failed request rate" has the characteristic "Reliabilty", which is not one of the nine of ISO/IEC 25010 or a known alias, did you mean "reliability"?
+           fix: write one of the nine characteristics, such as performance efficiency or reliability, or add the name your team uses to characteristicAliases in the configuration
+
+  ERROR    target-missed               examples/missed/targets.csv:8
+           the target "critical vulnerabilities" of security (== 0 count) is missed: measured 2 count at examples/missed/measurements.json:10 (source: dependency scan), 2 count off it
+           fix: improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed
+
+  ERROR    unknown-unit                examples/missed/targets.csv:16
+           the target "search response time" of performance efficiency has the unit "milisecond", which is not one the tool knows, did you mean "millisecond"?; the target is not compared
+           fix: write the unit as one the tool knows, such as ms, s, %, MB, MiB, rps or count, or add the name your team uses to unitAliases in the configuration
+
+  ERROR    invalid-record              examples/missed/targets.csv:17
+           the target "first contentful paint" of performance efficiency: the target "fast" has no comparison; write one of <=, >=, <, >, == in front of the number or in the comparison column; the target is not checked
+           fix: correct the record at the line named
+
+  ERROR    unit-mismatch               examples/missed/measurements.json:15
+           the measurement of "installation time" is in MB (data size) and its target at examples/missed/targets.csv:14 is in min (time); it is not compared
+           fix: measure the metric in the unit of the target, or correct the unit of the target or of the measurement
+
+  WARNING  missing-characteristic      examples/missed/targets.csv:1
+           no target names functional suitability, a characteristic of the required list
+           fix: add a target for the characteristic with a metric, a unit, a target value and an owner, or take the characteristic out of the required list of the configuration
+
+  WARNING  missing-characteristic      examples/missed/targets.csv:1
+           no target names safety, a characteristic of the required list
+           fix: add a target for the characteristic with a metric, a unit, a target value and an owner, or take the characteristic out of the required list of the configuration
+
+  WARNING  unverified-target           examples/missed/targets.csv:9
+           the target "open admin endpoints" of security (== 0 count) has no measurement
+           fix: add a measurement of the metric, from the method the target names, to the measurements file
+
+  WARNING  missing-owner               examples/missed/targets.csv:9
+           the target "open admin endpoints" of security has no owner
+           fix: name the person or team who answers for the target and acts when it is missed
+
+  WARNING  missing-method              examples/missed/targets.csv:9
+           the target "open admin endpoints" of security names no measurement method
+           fix: write how the metric is measured: the tool, the test or the query, and where it runs
+
+  WARNING  unknown-sub-characteristic  examples/missed/targets.csv:13
+           the target "contract test pass rate" of compatibility has the sub-characteristic "interoperabilty", which is not one of ISO/IEC 25010, did you mean "interoperability"?
+           fix: write a sub-characteristic of the characteristic, such as time behaviour for performance efficiency or availability for reliability, or leave the column empty
+
+  WARNING  duplicate-target            examples/missed/targets.csv:15
+           the target "monthly availability" of reliability has the comparison >= a second time; the first target is at examples/missed/targets.csv:5
+           fix: keep one target per metric and comparison, or name the metrics apart
+
+  INFO     untargeted-measurement      examples/missed/measurements.json:17
+           the measurement of "error budget burn", 0.7 score from slo dashboard export, names a metric that no target has
+           fix: add a target for the metric, or write the metric as its target writes it
+
+note: examples/missed/targets.csv: 1 column the tool does not read was left out: "notes"
+note: examples/missed/measurements.json: 1 key the tool does not read was left out: "app"
+
+This check compares the targets with the measurements as they are written. It runs no measurement, does not judge whether a target or a method suits the application, and does not certify conformance to ISO/IEC 25010 or any other standard (docs/limits.md).
+
+RESULT: FAIL - 8 findings at or above error (8 error, 7 warning, 1 info)

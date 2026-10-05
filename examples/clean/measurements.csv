@@ -1,0 +1,10 @@
+metric,value,unit,source
+acceptance tests passed,100,%,acceptance suite
+p95 catalogue search,0.21,s,load test
+supported browsers passing,4,count,browser test matrix
+accessibility audit violations,0,count,accessibility audit
+monthly availability,99.8,%,uptime probe
+staff accounts with two factors,97,%,identity provider
+median time to diagnose a defect,300,min,defect tracker
+deploy time,9,min,pipeline timing
+loans lost on failover,0,count,failover drill

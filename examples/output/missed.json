@@ -1,0 +1,919 @@
+{
+  "tool": "quality-target-check",
+  "version": "1.0.0",
+  "input": {
+    "targets": {
+      "paths": [
+        "examples/missed/targets.csv"
+      ],
+      "files": [
+        {
+          "file": "examples/missed/targets.csv",
+          "kind": "csv",
+          "read": true,
+          "rows": 16,
+          "records": 16
+        }
+      ],
+      "byKind": {
+        "csv": 1,
+        "json": 0
+      }
+    },
+    "measurements": {
+      "paths": [
+        "examples/missed/measurements.json"
+      ],
+      "files": [
+        {
+          "file": "examples/missed/measurements.json",
+          "kind": "json",
+          "read": true,
+          "rows": 14,
+          "records": 14
+        }
+      ],
+      "byKind": {
+        "csv": 0,
+        "json": 1
+      }
+    }
+  },
+  "config": {
+    "file": "examples/config.json",
+    "name": "Quillmoor quality targets",
+    "required": [
+      "functional suitability",
+      "performance efficiency",
+      "reliability",
+      "security",
+      "maintainability",
+      "safety"
+    ],
+    "requireAll": false,
+    "characteristicAliases": {
+      "usability": "interaction capability",
+      "portability": "flexibility",
+      "functionality": "functional suitability",
+      "efficiency": "performance efficiency"
+    },
+    "unitAliases": {
+      "req/sec": "rps"
+    },
+    "minSeverity": "info",
+    "failOn": "error",
+    "rules": [
+      {
+        "id": "missing-characteristic",
+        "key": "missingCharacteristic",
+        "level": "warning",
+        "rule": "a characteristic of the required list (functional suitability, performance efficiency, reliability, security, maintainability and safety) that no target names"
+      },
+      {
+        "id": "unknown-characteristic",
+        "key": "unknownCharacteristic",
+        "level": "error",
+        "rule": "a target whose characteristic is none of the nine of ISO/IEC 25010 and none of the 4 aliases of the configuration, or is empty"
+      },
+      {
+        "id": "unknown-sub-characteristic",
+        "key": "unknownSubCharacteristic",
+        "level": "warning",
+        "rule": "a target with a sub-characteristic that is not one of src/model.js, or that belongs to another characteristic"
+      },
+      {
+        "id": "missing-method",
+        "key": "missingMethod",
+        "level": "warning",
+        "rule": "a target with an empty measurement method, or a targets file with no method column"
+      },
+      {
+        "id": "missing-owner",
+        "key": "missingOwner",
+        "level": "warning",
+        "rule": "a target with an empty owner, or a targets file with no owner column"
+      },
+      {
+        "id": "unknown-unit",
+        "key": "unknownUnit",
+        "level": "error",
+        "rule": "a target with no unit, or a target or measurement whose unit is none of the units of src/units.js and the 1 alias of the configuration, or that names two different units"
+      },
+      {
+        "id": "unit-mismatch",
+        "key": "unitMismatch",
+        "level": "error",
+        "rule": "a measurement whose unit measures another dimension than the unit of its target"
+      },
+      {
+        "id": "duplicate-target",
+        "key": "duplicateTarget",
+        "level": "warning",
+        "rule": "a target whose metric and comparison an earlier target already has"
+      },
+      {
+        "id": "unverified-target",
+        "key": "unverifiedTarget",
+        "level": "warning",
+        "rule": "a target whose metric has no measurement in the measurements files"
+      },
+      {
+        "id": "target-missed",
+        "key": "targetMissed",
+        "level": "error",
+        "rule": "a measurement that does not meet the comparison of its target"
+      },
+      {
+        "id": "untargeted-measurement",
+        "key": "untargetedMeasurement",
+        "level": "info",
+        "rule": "a measurement whose metric no target names"
+      },
+      {
+        "id": "invalid-record",
+        "key": null,
+        "level": "error",
+        "rule": "a target or measurement with no metric, the wrong number of fields, no target or value the tool can read, or a value of the wrong kind"
+      },
+      {
+        "id": "unreadable-file",
+        "key": null,
+        "level": "error",
+        "rule": "a targets or measurements file that the tool could not read as UTF-8 text"
+      },
+      {
+        "id": "unparsable-file",
+        "key": null,
+        "level": "error",
+        "rule": "a targets or measurements file that the CSV or JSON reader refuses, or whose header or shape is not that of its role"
+      }
+    ]
+  },
+  "summary": {
+    "characteristics": [
+      {
+        "characteristic": "functional suitability",
+        "known": true,
+        "required": true,
+        "targets": 0,
+        "met": 0,
+        "missed": 0,
+        "unverified": 0
+      },
+      {
+        "characteristic": "performance efficiency",
+        "known": true,
+        "required": true,
+        "targets": 4,
+        "met": 1,
+        "missed": 2,
+        "unverified": 1
+      },
+      {
+        "characteristic": "compatibility",
+        "known": true,
+        "required": false,
+        "targets": 1,
+        "met": 1,
+        "missed": 0,
+        "unverified": 0
+      },
+      {
+        "characteristic": "interaction capability",
+        "known": true,
+        "required": false,
+        "targets": 1,
+        "met": 1,
+        "missed": 0,
+        "unverified": 0
+      },
+      {
+        "characteristic": "reliability",
+        "known": true,
+        "required": true,
+        "targets": 3,
+        "met": 2,
+        "missed": 1,
+        "unverified": 0
+      },
+      {
+        "characteristic": "security",
+        "known": true,
+        "required": true,
+        "targets": 2,
+        "met": 0,
+        "missed": 1,
+        "unverified": 1
+      },
+      {
+        "characteristic": "maintainability",
+        "known": true,
+        "required": true,
+        "targets": 2,
+        "met": 2,
+        "missed": 0,
+        "unverified": 0
+      },
+      {
+        "characteristic": "flexibility",
+        "known": true,
+        "required": false,
+        "targets": 1,
+        "met": 0,
+        "missed": 0,
+        "unverified": 1
+      },
+      {
+        "characteristic": "safety",
+        "known": true,
+        "required": true,
+        "targets": 0,
+        "met": 0,
+        "missed": 0,
+        "unverified": 0
+      },
+      {
+        "characteristic": "Reliabilty",
+        "known": false,
+        "required": false,
+        "targets": 1,
+        "met": 1,
+        "missed": 0,
+        "unverified": 0
+      }
+    ],
+    "totals": {
+      "targets": 15,
+      "met": 8,
+      "missed": 4,
+      "unverified": 3,
+      "measurements": 14,
+      "untargeted": 1
+    }
+  },
+  "results": [
+    {
+      "status": "missed",
+      "characteristic": "performance efficiency",
+      "subcharacteristic": "time behaviour",
+      "metric": "p95 checkout latency",
+      "target": "<= 300 ms",
+      "owner": "perf-team",
+      "file": "examples/missed/targets.csv",
+      "line": 2,
+      "source": "k6 run on staging",
+      "measurement": "examples/missed/measurements.json:4",
+      "measured": "420 ms",
+      "gap": "120 ms"
+    },
+    {
+      "status": "missed",
+      "characteristic": "performance efficiency",
+      "subcharacteristic": "resource utilization",
+      "metric": "api memory",
+      "target": "<= 512 MiB",
+      "owner": "perf-team",
+      "file": "examples/missed/targets.csv",
+      "line": 3,
+      "source": "container metrics",
+      "measurement": "examples/missed/measurements.json:5",
+      "measured": "614.4 MiB (0.6 GiB as measured)",
+      "gap": "102.4 MiB"
+    },
+    {
+      "status": "met",
+      "characteristic": "performance efficiency",
+      "subcharacteristic": "capacity",
+      "metric": "peak bookings throughput",
+      "target": ">= 500 rps",
+      "owner": "perf-team",
+      "file": "examples/missed/targets.csv",
+      "line": 4,
+      "source": "k6 run on staging",
+      "measurement": "examples/missed/measurements.json:6",
+      "measured": "610 rps",
+      "gap": ""
+    },
+    {
+      "status": "missed",
+      "characteristic": "reliability",
+      "subcharacteristic": "availability",
+      "metric": "monthly availability",
+      "target": ">= 99.9%",
+      "owner": "sre-team",
+      "file": "examples/missed/targets.csv",
+      "line": 5,
+      "source": "uptime probe",
+      "measurement": "examples/missed/measurements.json:7",
+      "measured": "99.5%",
+      "gap": "0.4%"
+    },
+    {
+      "status": "met",
+      "characteristic": "reliability",
+      "subcharacteristic": "recoverability",
+      "metric": "mean time to restore",
+      "target": "<= 30 min",
+      "owner": "sre-team",
+      "file": "examples/missed/targets.csv",
+      "line": 6,
+      "source": "incident log",
+      "measurement": "examples/missed/measurements.json:8",
+      "measured": "24 min (0.4 h as measured)",
+      "gap": ""
+    },
+    {
+      "status": "met",
+      "characteristic": "Reliabilty",
+      "subcharacteristic": "fault tolerance",
+      "metric": "failed request rate",
+      "target": "<= 1%",
+      "owner": "sre-team",
+      "file": "examples/missed/targets.csv",
+      "line": 7,
+      "source": "gateway logs",
+      "measurement": "examples/missed/measurements.json:9",
+      "measured": "0.4%",
+      "gap": ""
+    },
+    {
+      "status": "missed",
+      "characteristic": "security",
+      "subcharacteristic": "confidentiality",
+      "metric": "critical vulnerabilities",
+      "target": "== 0 count",
+      "owner": "security-team",
+      "file": "examples/missed/targets.csv",
+      "line": 8,
+      "source": "dependency scan",
+      "measurement": "examples/missed/measurements.json:10",
+      "measured": "2 count",
+      "gap": "2 count"
+    },
+    {
+      "status": "unverified",
+      "characteristic": "security",
+      "subcharacteristic": "",
+      "metric": "open admin endpoints",
+      "target": "== 0 count",
+      "owner": "",
+      "file": "examples/missed/targets.csv",
+      "line": 9,
+      "measured": "",
+      "gap": "",
+      "source": "",
+      "measurement": ""
+    },
+    {
+      "status": "met",
+      "characteristic": "interaction capability",
+      "subcharacteristic": "learnability",
+      "metric": "task completion rate",
+      "target": ">= 85%",
+      "owner": "design-team",
+      "file": "examples/missed/targets.csv",
+      "line": 10,
+      "source": "moderated test",
+      "measurement": "examples/missed/measurements.json:11",
+      "measured": "88%",
+      "gap": ""
+    },
+    {
+      "status": "met",
+      "characteristic": "maintainability",
+      "subcharacteristic": "testability",
+      "metric": "line coverage",
+      "target": ">= 80%",
+      "owner": "dev-team",
+      "file": "examples/missed/targets.csv",
+      "line": 11,
+      "source": "coverage report",
+      "measurement": "examples/missed/measurements.json:12",
+      "measured": "84.2%",
+      "gap": ""
+    },
+    {
+      "status": "met",
+      "characteristic": "maintainability",
+      "subcharacteristic": "modularity",
+      "metric": "cyclic module dependencies",
+      "target": "== 0 count",
+      "owner": "dev-team",
+      "file": "examples/missed/targets.csv",
+      "line": 12,
+      "source": "dependency graph",
+      "measurement": "examples/missed/measurements.json:13",
+      "measured": "0 count",
+      "gap": ""
+    },
+    {
+      "status": "met",
+      "characteristic": "compatibility",
+      "subcharacteristic": "interoperabilty",
+      "metric": "contract test pass rate",
+      "target": ">= 99%",
+      "owner": "dev-team",
+      "file": "examples/missed/targets.csv",
+      "line": 13,
+      "source": "contract tests",
+      "measurement": "examples/missed/measurements.json:14",
+      "measured": "100%",
+      "gap": ""
+    },
+    {
+      "status": "unverified",
+      "characteristic": "flexibility",
+      "subcharacteristic": "installability",
+      "metric": "installation time",
+      "target": "<= 15 min",
+      "owner": "ops-team",
+      "file": "examples/missed/targets.csv",
+      "line": 14,
+      "source": "install script",
+      "measurement": "examples/missed/measurements.json:15",
+      "measured": "12 MB",
+      "gap": ""
+    },
+    {
+      "status": "met",
+      "characteristic": "reliability",
+      "subcharacteristic": "availability",
+      "metric": "monthly availability",
+      "target": ">= 99.5%",
+      "owner": "sre-team",
+      "file": "examples/missed/targets.csv",
+      "line": 15,
+      "source": "uptime probe",
+      "measurement": "examples/missed/measurements.json:7",
+      "measured": "99.5%",
+      "gap": ""
+    },
+    {
+      "status": "unverified",
+      "characteristic": "performance efficiency",
+      "subcharacteristic": "time behaviour",
+      "metric": "search response time",
+      "target": "<= 200 milisecond",
+      "owner": "perf-team",
+      "file": "examples/missed/targets.csv",
+      "line": 16,
+      "source": "k6 run on staging",
+      "measurement": "examples/missed/measurements.json:16",
+      "measured": "180 ms",
+      "gap": ""
+    }
+  ],
+  "findings": [
+    {
+      "rule": "target-missed",
+      "level": "error",
+      "file": "examples/missed/targets.csv",
+      "line": 2,
+      "column": 63,
+      "at": "examples/missed/targets.csv:2",
+      "characteristic": "performance efficiency",
+      "metric": "p95 checkout latency",
+      "found": "the target \"p95 checkout latency\" of performance efficiency (<= 300 ms) is missed: measured 420 ms at examples/missed/measurements.json:4 (source: k6 run on staging), 120 ms over it",
+      "fix": "improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed",
+      "basis": [
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        },
+        {
+          "text": "the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality",
+          "source": "The ISO/IEC 25000 series of standards, page 2 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards?start=5"
+        },
+        {
+          "text": "the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        }
+      ],
+      "own": "every measurement of a metric is compared with every target of the metric, after conversion to the unit of the target and with twelve significant digits; a target is missed when one of its measurements misses it, and the gap is shown in the unit of the target"
+    },
+    {
+      "rule": "target-missed",
+      "level": "error",
+      "file": "examples/missed/targets.csv",
+      "line": 3,
+      "column": 60,
+      "at": "examples/missed/targets.csv:3",
+      "characteristic": "performance efficiency",
+      "metric": "api memory",
+      "found": "the target \"api memory\" of performance efficiency (<= 512 MiB) is missed: measured 614.4 MiB (0.6 GiB as measured) at examples/missed/measurements.json:5 (source: container metrics), 102.4 MiB over it",
+      "fix": "improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed",
+      "basis": [
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        },
+        {
+          "text": "the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality",
+          "source": "The ISO/IEC 25000 series of standards, page 2 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards?start=5"
+        },
+        {
+          "text": "the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        }
+      ],
+      "own": "every measurement of a metric is compared with every target of the metric, after conversion to the unit of the target and with twelve significant digits; a target is missed when one of its measurements misses it, and the gap is shown in the unit of the target"
+    },
+    {
+      "rule": "target-missed",
+      "level": "error",
+      "file": "examples/missed/targets.csv",
+      "line": 5,
+      "column": 49,
+      "at": "examples/missed/targets.csv:5",
+      "characteristic": "reliability",
+      "metric": "monthly availability",
+      "found": "the target \"monthly availability\" of reliability (>= 99.9%) is missed: measured 99.5% at examples/missed/measurements.json:7 (source: uptime probe), 0.4% under it",
+      "fix": "improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed",
+      "basis": [
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        },
+        {
+          "text": "the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality",
+          "source": "The ISO/IEC 25000 series of standards, page 2 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards?start=5"
+        },
+        {
+          "text": "the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        }
+      ],
+      "own": "every measurement of a metric is compared with every target of the metric, after conversion to the unit of the target and with twelve significant digits; a target is missed when one of its measurements misses it, and the gap is shown in the unit of the target"
+    },
+    {
+      "rule": "unknown-characteristic",
+      "level": "error",
+      "file": "examples/missed/targets.csv",
+      "line": 7,
+      "column": 1,
+      "at": "examples/missed/targets.csv:7",
+      "characteristic": "Reliabilty",
+      "metric": "failed request rate",
+      "found": "the target \"failed request rate\" has the characteristic \"Reliabilty\", which is not one of the nine of ISO/IEC 25010 or a known alias, did you mean \"reliability\"?",
+      "fix": "write one of the nine characteristics, such as performance efficiency or reliability, or add the name your team uses to characteristicAliases in the configuration",
+      "basis": [
+        {
+          "text": "the product quality model has nine characteristics: functional suitability, performance efficiency, compatibility, interaction capability, reliability, security, maintainability, flexibility and safety",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        },
+        {
+          "text": "interaction capability was formerly called usability, and flexibility was formerly called portability",
+          "source": "ISO/IEC 25010, Systems and Software Quality (arc42 Quality Model)",
+          "url": "https://quality.arc42.org/standards/iso-25010"
+        },
+        {
+          "text": "ISO/IEC 9126, the model before ISO/IEC 25010, named functionality and efficiency where ISO/IEC 25010 names functional suitability and performance efficiency, and had maturity under reliability",
+          "source": "ISO/IEC 9126 (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/ISO/IEC_9126"
+        },
+        {
+          "text": "the first edition, now withdrawn, had a product quality model of eight characteristics",
+          "source": "ISO/IEC 25010, System and software quality models, first edition, withdrawn (ISO)",
+          "url": "https://www.iso.org/standard/35733.html"
+        }
+      ],
+      "own": "a characteristic is compared with the letters A to Z lowered and every other character made a space, with the nine names and the aliases (the older names usability, portability, functionality and efficiency are built in); a near name is suggested, never used; the target is still compared with its measurements"
+    },
+    {
+      "rule": "target-missed",
+      "level": "error",
+      "file": "examples/missed/targets.csv",
+      "line": 8,
+      "column": 57,
+      "at": "examples/missed/targets.csv:8",
+      "characteristic": "security",
+      "metric": "critical vulnerabilities",
+      "found": "the target \"critical vulnerabilities\" of security (== 0 count) is missed: measured 2 count at examples/missed/measurements.json:10 (source: dependency scan), 2 count off it",
+      "fix": "improve the application until the measurement meets the target, or change the target in a reviewed commit when the need has changed",
+      "basis": [
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        },
+        {
+          "text": "the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality",
+          "source": "The ISO/IEC 25000 series of standards, page 2 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards?start=5"
+        },
+        {
+          "text": "the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        }
+      ],
+      "own": "every measurement of a metric is compared with every target of the metric, after conversion to the unit of the target and with twelve significant digits; a target is missed when one of its measurements misses it, and the gap is shown in the unit of the target"
+    },
+    {
+      "rule": "unknown-unit",
+      "level": "error",
+      "file": "examples/missed/targets.csv",
+      "line": 16,
+      "column": 60,
+      "at": "examples/missed/targets.csv:16",
+      "characteristic": "performance efficiency",
+      "metric": "search response time",
+      "found": "the target \"search response time\" of performance efficiency has the unit \"milisecond\", which is not one the tool knows, did you mean \"millisecond\"?; the target is not compared",
+      "fix": "write the unit as one the tool knows, such as ms, s, %, MB, MiB, rps or count, or add the name your team uses to unitAliases in the configuration",
+      "basis": [
+        {
+          "text": "the ISO/IEC 2502n division of the series gives a reference model for measurement, defined quality measures and guidance on applying them, with ISO/IEC 25023 for measures of system and software product quality",
+          "source": "The ISO/IEC 25000 series of standards, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards"
+        }
+      ],
+      "own": "a target needs a unit from src/units.js or the unitAliases of the configuration (count and score stand for a number with no other unit); a measurement with no unit takes the unit of its target; a target or measurement with a unit the tool does not know is not compared, and its target counts as unverified"
+    },
+    {
+      "rule": "invalid-record",
+      "level": "error",
+      "file": "examples/missed/targets.csv",
+      "line": 17,
+      "column": 64,
+      "at": "examples/missed/targets.csv:17",
+      "characteristic": "performance efficiency",
+      "metric": "first contentful paint",
+      "found": "the target \"first contentful paint\" of performance efficiency: the target \"fast\" has no comparison; write one of <=, >=, <, >, == in front of the number or in the comparison column; the target is not checked",
+      "fix": "correct the record at the line named",
+      "basis": [
+        {
+          "text": "every line of a CSV file should hold the same number of fields",
+          "source": "RFC 4180, Common Format and MIME Type for Comma-Separated Values (CSV) Files",
+          "url": "https://www.rfc-editor.org/rfc/rfc4180"
+        },
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        }
+      ],
+      "own": "a record with no metric, a CSV row with a different number of fields than the header, a JSON record that is not an object or names a field twice, a target with no comparison or no number, and a measurement with no number are not checked; a value of the wrong kind is taken as empty; this rule cannot be set lower or off"
+    },
+    {
+      "rule": "unit-mismatch",
+      "level": "error",
+      "file": "examples/missed/measurements.json",
+      "line": 15,
+      "column": 59,
+      "at": "examples/missed/measurements.json:15",
+      "characteristic": "flexibility",
+      "metric": "installation time",
+      "found": "the measurement of \"installation time\" is in MB (data size) and its target at examples/missed/targets.csv:14 is in min (time); it is not compared",
+      "fix": "measure the metric in the unit of the target, or correct the unit of the target or of the measurement",
+      "basis": [
+        {
+          "text": "the ISO/IEC 2502n division of the series gives a reference model for measurement, defined quality measures and guidance on applying them, with ISO/IEC 25023 for measures of system and software product quality",
+          "source": "The ISO/IEC 25000 series of standards, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards"
+        },
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        }
+      ],
+      "own": "two units can be compared when they measure the same dimension (time, percentage, data size, rate, count or score), and the measurement is then converted to the unit of the target; a percentage is never read as a count, and a time never as a rate"
+    },
+    {
+      "rule": "missing-characteristic",
+      "level": "warning",
+      "file": "examples/missed/targets.csv",
+      "line": 1,
+      "column": 1,
+      "at": "examples/missed/targets.csv:1",
+      "characteristic": "functional suitability",
+      "metric": "",
+      "found": "no target names functional suitability, a characteristic of the required list",
+      "fix": "add a target for the characteristic with a metric, a unit, a target value and an owner, or take the characteristic out of the required list of the configuration",
+      "basis": [
+        {
+          "text": "the product quality model has nine characteristics: functional suitability, performance efficiency, compatibility, interaction capability, reliability, security, maintainability, flexibility and safety",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        },
+        {
+          "text": "the current edition defines a product quality model of nine characteristics, divided into sub-characteristics, as a reference for specifying, measuring and evaluating the quality of a product",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        },
+        {
+          "text": "the quality model decides which quality characteristics are taken into account when the properties of a software product are evaluated, and it sorts product quality into characteristics and sub-characteristics",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        }
+      ],
+      "own": "which characteristics need a target is the tool's own choice, set by the required list of the configuration (all nine by default); a target row with the characteristic counts, whether or not its target can be read; a warning, or an error with --require-all or requireAll, which then win over the level of the rule"
+    },
+    {
+      "rule": "missing-characteristic",
+      "level": "warning",
+      "file": "examples/missed/targets.csv",
+      "line": 1,
+      "column": 1,
+      "at": "examples/missed/targets.csv:1",
+      "characteristic": "safety",
+      "metric": "",
+      "found": "no target names safety, a characteristic of the required list",
+      "fix": "add a target for the characteristic with a metric, a unit, a target value and an owner, or take the characteristic out of the required list of the configuration",
+      "basis": [
+        {
+          "text": "the product quality model has nine characteristics: functional suitability, performance efficiency, compatibility, interaction capability, reliability, security, maintainability, flexibility and safety",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        },
+        {
+          "text": "the current edition defines a product quality model of nine characteristics, divided into sub-characteristics, as a reference for specifying, measuring and evaluating the quality of a product",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        },
+        {
+          "text": "the quality model decides which quality characteristics are taken into account when the properties of a software product are evaluated, and it sorts product quality into characteristics and sub-characteristics",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        }
+      ],
+      "own": "which characteristics need a target is the tool's own choice, set by the required list of the configuration (all nine by default); a target row with the characteristic counts, whether or not its target can be read; a warning, or an error with --require-all or requireAll, which then win over the level of the rule"
+    },
+    {
+      "rule": "unverified-target",
+      "level": "warning",
+      "file": "examples/missed/targets.csv",
+      "line": 9,
+      "column": 38,
+      "at": "examples/missed/targets.csv:9",
+      "characteristic": "security",
+      "metric": "open admin endpoints",
+      "found": "the target \"open admin endpoints\" of security (== 0 count) has no measurement",
+      "fix": "add a measurement of the metric, from the method the target names, to the measurements file",
+      "basis": [
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        },
+        {
+          "text": "the ISO/IEC 2504n division gives the requirements and guidance for evaluating a product, with ISO/IEC 25040 as the reference model for specifying and evaluating software quality",
+          "source": "The ISO/IEC 25000 series of standards, page 2 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards?start=5"
+        }
+      ],
+      "own": "a measurement belongs to a target when their metrics are the same in their term form; a warning, because a target with no result says nothing about the application yet"
+    },
+    {
+      "rule": "missing-owner",
+      "level": "warning",
+      "file": "examples/missed/targets.csv",
+      "line": 9,
+      "column": 43,
+      "at": "examples/missed/targets.csv:9",
+      "characteristic": "security",
+      "metric": "open admin endpoints",
+      "found": "the target \"open admin endpoints\" of security has no owner",
+      "fix": "name the person or team who answers for the target and acts when it is missed",
+      "basis": [
+        {
+          "text": "the quality of a system is how far it meets the stated and implied needs of its stakeholders, such as functionality, performance, security and maintainability, and those needs are what the model represents",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        }
+      ],
+      "own": "an owner per target is the tool's own choice: a target that nobody answers for is not kept up to date when the application changes; any text counts as an owner"
+    },
+    {
+      "rule": "missing-method",
+      "level": "warning",
+      "file": "examples/missed/targets.csv",
+      "line": 9,
+      "column": 44,
+      "at": "examples/missed/targets.csv:9",
+      "characteristic": "security",
+      "metric": "open admin endpoints",
+      "found": "the target \"open admin endpoints\" of security names no measurement method",
+      "fix": "write how the metric is measured: the tool, the test or the query, and where it runs",
+      "basis": [
+        {
+          "text": "the ISO/IEC 2502n division of the series gives a reference model for measurement, defined quality measures and guidance on applying them, with ISO/IEC 25023 for measures of system and software product quality",
+          "source": "The ISO/IEC 25000 series of standards, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards"
+        },
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        }
+      ],
+      "own": "a method that is empty or a blank word such as none, n/a or tbd; any other text counts as a method, the tool cannot tell whether it measures the metric"
+    },
+    {
+      "rule": "unknown-sub-characteristic",
+      "level": "warning",
+      "file": "examples/missed/targets.csv",
+      "line": 13,
+      "column": 15,
+      "at": "examples/missed/targets.csv:13",
+      "characteristic": "compatibility",
+      "metric": "contract test pass rate",
+      "found": "the target \"contract test pass rate\" of compatibility has the sub-characteristic \"interoperabilty\", which is not one of ISO/IEC 25010, did you mean \"interoperability\"?",
+      "fix": "write a sub-characteristic of the characteristic, such as time behaviour for performance efficiency or availability for reliability, or leave the column empty",
+      "basis": [
+        {
+          "text": "each characteristic is made of sub-characteristics, such as time behaviour, resource utilization and capacity for performance efficiency, or learnability, operability and inclusivity for interaction capability",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        },
+        {
+          "text": "reliability, security, maintainability, flexibility and safety have sub-characteristics of their own, such as faultlessness and availability, confidentiality and resistance, testability, scalability, and fail safe",
+          "source": "ISO/IEC 25010, the product quality model, page 2 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010?start=5"
+        },
+        {
+          "text": "ISO/IEC 9126, the model before ISO/IEC 25010, named functionality and efficiency where ISO/IEC 25010 names functional suitability and performance efficiency, and had maturity under reliability",
+          "source": "ISO/IEC 9126 (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/ISO/IEC_9126"
+        }
+      ],
+      "own": "a sub-characteristic is optional; when one is written it must be a sub-characteristic of the characteristic of the target, by its name or by an older name or spelling of src/model.js; a warning, because the target can still be checked"
+    },
+    {
+      "rule": "duplicate-target",
+      "level": "warning",
+      "file": "examples/missed/targets.csv",
+      "line": 15,
+      "column": 26,
+      "at": "examples/missed/targets.csv:15",
+      "characteristic": "reliability",
+      "metric": "monthly availability",
+      "found": "the target \"monthly availability\" of reliability has the comparison >= a second time; the first target is at examples/missed/targets.csv:5",
+      "fix": "keep one target per metric and comparison, or name the metrics apart",
+      "basis": [
+        {
+          "text": "the uses of the model include identifying acceptance criteria for a product and establishing measures of its quality characteristics",
+          "source": "ISO/IEC 25010, Product quality model, second edition (ISO)",
+          "url": "https://www.iso.org/standard/78176.html"
+        }
+      ],
+      "own": "two targets with the same metric, compared in their term form, and the same comparison; both are still checked, so the stricter one decides; a lower and an upper limit of one metric are not duplicates"
+    },
+    {
+      "rule": "untargeted-measurement",
+      "level": "info",
+      "file": "examples/missed/measurements.json",
+      "line": 17,
+      "column": 17,
+      "at": "examples/missed/measurements.json:17",
+      "characteristic": "",
+      "metric": "error budget burn",
+      "found": "the measurement of \"error budget burn\", 0.7 score from slo dashboard export, names a metric that no target has",
+      "fix": "add a target for the metric, or write the metric as its target writes it",
+      "basis": [
+        {
+          "text": "the quality model decides which quality characteristics are taken into account when the properties of a software product are evaluated, and it sorts product quality into characteristics and sub-characteristics",
+          "source": "ISO/IEC 25010, the product quality model, page 1 (iso25000.com)",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+        }
+      ],
+      "own": "info by default: a measured value with no target may be a target that was forgotten or a metric written two ways, such as p95 latency and latency p95"
+    }
+  ],
+  "totals": {
+    "findings": 16,
+    "byLevel": {
+      "error": 8,
+      "warning": 7,
+      "info": 1
+    },
+    "hidden": 0,
+    "notListed": 0
+  },
+  "result": {
+    "pass": false,
+    "failOn": "error",
+    "failing": 8,
+    "byLevel": {
+      "error": 8,
+      "warning": 7,
+      "info": 1
+    },
+    "text": "FAIL - 8 findings at or above error (8 error, 7 warning, 1 info)"
+  },
+  "notes": [
+    "examples/missed/targets.csv: 1 column the tool does not read was left out: \"notes\"",
+    "examples/missed/measurements.json: 1 key the tool does not read was left out: \"app\""
+  ],
+  "notice": "This check compares the targets with the measurements as they are written. It runs no measurement, does not judge whether a target or a method suits the application, and does not certify conformance to ISO/IEC 25010 or any other standard (docs/limits.md)."
+}

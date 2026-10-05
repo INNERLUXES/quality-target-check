@@ -1,0 +1,33 @@
+quality-target-check: targets examples/clean/targets.json; measurements examples/clean/measurements.csv
+input: targets examples/clean/targets.json (1 file: 1 JSON file; 9 records); measurements examples/clean/measurements.csv (1 file: 1 CSV file; 9 records)
+config: built-in defaults: 9 required characteristics, require all off; 4 characteristic aliases, 0 unit aliases; minimum severity info; fail on error
+rules: missing-characteristic (warning); unknown-characteristic (error); unknown-sub-characteristic (warning); missing-method (warning); missing-owner (warning); unknown-unit (error); unit-mismatch (error); duplicate-target (warning); unverified-target (warning); target-missed (error); untargeted-measurement (info); invalid-record (error); unreadable-file (error); unparsable-file (error)
+targets: 9 targets: 9 met, 0 missed, 0 unverified; 9 measurements, 0 with no target
+findings: 0
+
+Characteristics (9)
+
+  characteristic          required  targets  met  missed  unverified
+  functional suitability  yes       1        1    0       0
+  performance efficiency  yes       1        1    0       0
+  compatibility           yes       1        1    0       0
+  interaction capability  yes       1        1    0       0
+  reliability             yes       1        1    0       0
+  security                yes       1        1    0       0
+  maintainability         yes       1        1    0       0
+  flexibility             yes       1        1    0       0
+  safety                  yes       1        1    0       0
+
+Targets missed (0)
+
+  none
+
+Findings (0)
+
+  none
+
+note: examples/clean/targets.json: 1 key the tool does not read was left out: "app"
+
+This check compares the targets with the measurements as they are written. It runs no measurement, does not judge whether a target or a method suits the application, and does not certify conformance to ISO/IEC 25010 or any other standard (docs/limits.md).
+
+RESULT: PASS - no finding at or above error

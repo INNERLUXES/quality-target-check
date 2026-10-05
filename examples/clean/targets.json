@@ -1,0 +1,14 @@
+{
+  "app": "Fernhollow library app",
+  "targets": [
+    { "characteristic": "functional suitability", "subCharacteristic": "functional correctness", "metric": "acceptance tests passed", "unit": "%", "target": ">= 100", "owner": "loans-team", "method": "acceptance suite on every merge" },
+    { "characteristic": "performance efficiency", "subCharacteristic": "time behaviour", "metric": "p95 catalogue search", "unit": "ms", "comparison": "<=", "target": 250, "owner": "search-team", "method": "load test of the search endpoint" },
+    { "characteristic": "compatibility", "subCharacteristic": "co-existence", "metric": "supported browsers passing", "unit": "count", "target": ">= 4", "owner": "web-team", "method": "browser test matrix" },
+    { "characteristic": "interaction capability", "subCharacteristic": "inclusivity", "metric": "accessibility audit violations", "unit": "count", "target": "== 0", "owner": "web-team", "method": "automated audit of the main pages" },
+    { "characteristic": "reliability", "subCharacteristic": "availability", "metric": "monthly availability", "unit": "%", "target": ">= 99.5", "owner": "platform-team", "method": "uptime probe every minute" },
+    { "characteristic": "security", "subCharacteristic": "authenticity", "metric": "staff accounts with two factors", "unit": "%", "target": ">= 95", "owner": "security-team", "method": "identity provider report" },
+    { "characteristic": "maintainability", "subCharacteristic": "analysability", "metric": "median time to diagnose a defect", "unit": "h", "target": "<= 8", "owner": "loans-team", "method": "defect tracker" },
+    { "characteristic": "flexibility", "subCharacteristic": "installability", "metric": "deploy time", "unit": "min", "target": "<= 20", "owner": "platform-team", "method": "pipeline timing" },
+    { "characteristic": "safety", "subCharacteristic": "fail safe", "metric": "loans lost on failover", "unit": "count", "target": "== 0", "owner": "platform-team", "method": "failover drill" }
+  ]
+}

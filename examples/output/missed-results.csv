@@ -1,0 +1,16 @@
+status,characteristic,subcharacteristic,metric,target,measured,gap,source,owner,file,line,measurement
+missed,performance efficiency,time behaviour,p95 checkout latency,<= 300 ms,420 ms,120 ms,k6 run on staging,perf-team,examples/missed/targets.csv,2,examples/missed/measurements.json:4
+missed,performance efficiency,resource utilization,api memory,<= 512 MiB,614.4 MiB (0.6 GiB as measured),102.4 MiB,container metrics,perf-team,examples/missed/targets.csv,3,examples/missed/measurements.json:5
+met,performance efficiency,capacity,peak bookings throughput,>= 500 rps,610 rps,,k6 run on staging,perf-team,examples/missed/targets.csv,4,examples/missed/measurements.json:6
+missed,reliability,availability,monthly availability,>= 99.9%,99.5%,0.4%,uptime probe,sre-team,examples/missed/targets.csv,5,examples/missed/measurements.json:7
+met,reliability,recoverability,mean time to restore,<= 30 min,24 min (0.4 h as measured),,incident log,sre-team,examples/missed/targets.csv,6,examples/missed/measurements.json:8
+met,Reliabilty,fault tolerance,failed request rate,<= 1%,0.4%,,gateway logs,sre-team,examples/missed/targets.csv,7,examples/missed/measurements.json:9
+missed,security,confidentiality,critical vulnerabilities,'== 0 count,2 count,2 count,dependency scan,security-team,examples/missed/targets.csv,8,examples/missed/measurements.json:10
+unverified,security,,open admin endpoints,'== 0 count,,,,,examples/missed/targets.csv,9,
+met,interaction capability,learnability,task completion rate,>= 85%,88%,,moderated test,design-team,examples/missed/targets.csv,10,examples/missed/measurements.json:11
+met,maintainability,testability,line coverage,>= 80%,84.2%,,coverage report,dev-team,examples/missed/targets.csv,11,examples/missed/measurements.json:12
+met,maintainability,modularity,cyclic module dependencies,'== 0 count,0 count,,dependency graph,dev-team,examples/missed/targets.csv,12,examples/missed/measurements.json:13
+met,compatibility,interoperabilty,contract test pass rate,>= 99%,100%,,contract tests,dev-team,examples/missed/targets.csv,13,examples/missed/measurements.json:14
+unverified,flexibility,installability,installation time,<= 15 min,12 MB,,install script,ops-team,examples/missed/targets.csv,14,examples/missed/measurements.json:15
+met,reliability,availability,monthly availability,>= 99.5%,99.5%,,uptime probe,sre-team,examples/missed/targets.csv,15,examples/missed/measurements.json:7
+unverified,performance efficiency,time behaviour,search response time,<= 200 milisecond,180 ms,,k6 run on staging,perf-team,examples/missed/targets.csv,16,examples/missed/measurements.json:16
